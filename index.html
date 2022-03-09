@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/p5@1.4.1/lib/p5.js"></script>
+    <script> 
+        var smileFaceX = 200;
+        var smileFaceY = 265;
+        var smileFaceSpeed = 2;
+        var smileFaceDirectionX = -1;
+        var smileFaceDirectionY = +1;
+
+        function setup () {
+            createCanvas(400,400);
+        }
+        function draw () {
+            clear();
+            background("#45D7D9");
+
+            checkMargins();
+
+            smileFace(smileFaceX-smileFaceSpeed, smileFaceY, 70);
+            smileFaceX = smileFaceX + (smileFaceSpeed * smileFaceDirectionX);
+            smileFaceY = smileFaceY + (smileFaceSpeed * smileFaceDirectionY);
+
+            paddle(mouseX, 365);
+        }
+        function checkMargins() {
+            if (smileFaceX - 35 < 0) {
+                smileFaceDirectionX = -1 * smileFaceDirectionX
+            }
+            if (smileFaceX +35 > 400) {
+                smileFaceDirectionX = -1 * smileFaceDirectionX
+            }
+            if (smileFaceY-35 < 0) {
+                smileFaceDirectionY = -1 * smileFaceDirectionY
+            }
+            //paddle
+            if (smileFaceY +70 > 400 && smileFaceY +35 < 400) {
+                if (smileFaceX +35 >= mouseX -50 && smileFaceX -35 <= mouseX +50)
+                    smileFaceDirectionY = -1 * smileFaceDirectionY
+                    smileFaceSpeed += 0.5
+            }
+        }
+
+        function paddle(x, y) {
+            fill('#00FF00');
+            rect(x-50, y, 100, 20); 
+        }
+
+        function smileFace(x, y, r) {
+            fill('#FFFF00');
+            ellipse (x, y, r, r);
+
+
+            if (mouseIsPressed) {
+                fill('#FFFFFF'); 
+
+            } else {
+                fill('#0000FF');
+            }
+
+            ellipse (x+r/5, y-r/5, r/5, r/5);
+            ellipse (x-r/5, y-r/5, r/5, r/5);
+
+            fill('#FA0E00')
+            arc(x, y+10, 20, 15, 0, PI);
+            //oneTime = fals;
+        }
+                
+    </script>
+</body>
+</html>
